@@ -1,0 +1,89 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <ul class="breadcrumb">
+        <li><a href="/">Strona główna</a></li>
+    </ul>
+
+    {% block pracownicy %}
+    <div class="main panel panel-primary">
+
+        <div class="panel-heading"><h3 class="panel-title"><a href="/pracownicy/">Pracownicy</a></h3></div>
+        <div class="panel-body">
+        <table class="table table-hover table-condensed">
+            <tr>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>Etat</th>
+                <th>Szef</th>
+                <th>Zatrudniony</th>
+                <th>Płaca podstawowa</th>
+                <th>Płaca dodatkowa</th>
+                <th>Zespół</th>
+            </tr>
+            {% for p in pracownicy %}
+            <tr id="{{ p.pk }}" class="clickable-row-all-pracownicy">
+                <td>{{p.imie}}</td>
+                <td>{{ p.nazwisko }}</td>
+                <td>{{ p.ID_etatu.nazwa }}</td>
+                <td>{{ p.ID_szefa.imie }} {{ p.ID_szefa.nazwisko }}</td>
+                <td>{{ p.zatrudniony }}</td>
+                <td>{{ p.placa_pod }}</td>
+                <td>{{ p.placa_dod }}</td>
+                <td>{{ p.ID_zespolu.nazwa }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    {% endblock %}
+
+        <div class="row main razem">
+    {% block etaty %}
+        <div class="col-md-6">
+        <div class="panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title"><a href="/etaty/">Etaty</a></h3></div>
+        <div class="panel-body">
+        <table class="table table-hover table-condensed">
+            <tr>
+                <th>Nazwa</th>
+                <th>Płaca minimalna</th>
+                <th>Płaca maksymalna</th>
+            </tr>
+            {% for e in etaty %}
+            <tr id="{{ e.pk }}" class="clickable-row-all-etaty">
+                <td>{{ e.nazwa }}</td>
+                <td>{{ e.placa_od }}</td>
+                <td>{{ e.placa_do }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </div>
+        </div>
+    {% endblock etaty %}
+
+    {% block zespoly %}
+        <div class="col-md-6">
+        <div class="panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title"><a href="/zespoly/">Zespoły</a></h3></div>
+        <div class="panel-body">
+        <table class="table table-hover table-condensed">
+            <tr>
+                <th>Nazwa</th>
+                <th>Adres</th>
+            </tr>
+            {% for z in zespoly %}
+            <tr id="{{ z.pk }}" class="clickable-row-all-zespoly">
+                <td>{{ z.nazwa }}</td>
+                <td>{{ z.adres }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </div>
+        </div>
+    {% endblock zespoly %}
+    </div>
+
+{% endblock %}

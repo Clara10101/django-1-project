@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+
+    {% block content %}
+    <ul class="breadcrumb">
+        <li><a href="/">Strona główna</a></li>
+        <li><a href="/etaty">Etaty</a></li>
+        <li class="active">{% block title %}{{ etat.nazwa }}{% endblock %}</li>
+    </ul>
+    <div class="main panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title">Informacje o etacie</h3></div>
+        <div class="panel-body">
+        <ul>
+            <li>Nazwa etatu - <a href="/etat-{{etat.pk}}/">{{ etat.nazwa }}</a></li>
+            <li>Płaca minimalna - {{ etat.placa_od }}</li>
+            <li>Płaca maksymalna - {{ etat.placa_do }}</li>
+        </ul>
+        </div>
+        </div>
+    {% endblock %}

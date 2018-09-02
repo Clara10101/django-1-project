@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+
+    {% block content %}
+    <ul class="breadcrumb">
+        <li><a href="/">Strona główna</a></li>
+        <li><a href="/pracownicy">Pracownicy</a></li>
+        <li class="active">{% block title %}{{ pracownik.imie }} {{ pracownik.nazwisko }}{% endblock %}</li>
+    </ul>
+    <div id="main" class="main panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title">Informacje o pracowniku</h3></div>
+        <div class="panel-body">
+        <ul>
+            <li><a href="/pracownik-{{pracownik.pk}}/">{{pracownik.imie}} {{ pracownik.nazwisko }}</a></li>
+            {% if pracownik.ID_szefa %}
+                <li>Szef - <a href="/pracownik-{{pracownik.ID_szefa.pk}}/">{{pracownik.ID_szefa.imie}} {{ pracownik.ID_szefa.nazwisko }}</a></li>
+            {% endif %}
+            <li>Etat - <a href="/etat-{{pracownik.ID_etatu.pk}}/">{{pracownik.ID_etatu.nazwa}}</a></li>
+            <li>zatrudniony od {{ pracownik.zatrudniony }}</li>
+            <li>płaca podstawowa - {{ pracownik.placa_pod }} zł</li>
+            <li>płaca dodatkowa - {{ pracownik.placa_dod }} zł</li>
+            {% if pracownik.ID_zespolu %}
+                <li>Zespół - <a href="/zespol-{{pracownik.ID_zespolu.pk}}/">{{pracownik.ID_zespolu.nazwa}}</a></li>
+            {% endif %}
+        </ul>
+        </div>
+        </div>
+    {% endblock %}

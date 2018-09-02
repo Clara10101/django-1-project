@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+
+
+{% block content %}
+    <ul class="breadcrumb">
+        <li><a href="/">Strona główna</a></li>
+        <li class="active">Etaty</li>
+    </ul>
+{% block etaty %}
+        <div class="main panel panel-primary">
+        <div class="panel-heading"><h3 class="panel-title"><a href="/etaty/">Etaty</a></h3></div>
+        <div class="panel-body">
+        <table class="table table-hover table-condensed">
+            <tr>
+                <th>Nazwa</th>
+                <th>Płaca minimalna</th>
+                <th>Płaca maksymalna</th>
+            </tr>
+            {% for e in etaty %}
+            <tr>
+                <td id="{{ e.pk }}" class="clickable-row-etaty">{{ e.nazwa }}</td>
+                <td>{{ e.placa_od }}</td>
+                <td>{{ e.placa_do }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </div>
+    {% endblock etaty %}
+
+{% endblock content %}

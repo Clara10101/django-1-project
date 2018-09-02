@@ -1,0 +1,97 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <ul class="breadcrumb">
+        <li><a href="/">Strona główna</a></li>
+        <li class="active">Pracownicy</li>
+    </ul>
+
+    {% block pracownicy %}
+    <div class="main panel panel-primary panel-pracownicy">
+
+        <div class="panel-heading"><h3 class="panel-title">Pracownicy</h3></div>
+        <div class="panel-body">
+        <table class="table table-hover table-condensed tablica-edycja">
+            <tr>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+                <th>Etat</th>
+                <th>Szef</th>
+                <th>Zatrudniony</th>
+                <th>Płaca podstawowa</th>
+                <th>Płaca dodatkowa</th>
+                <th>Zespół</th>
+                <th>Edycja</th>
+            </tr>
+            {% for p in pracownicy %}
+            <tr>
+                <td class="clickable-row-pracownicy">{{p.imie}}</td>
+                <td class="clickable-row-pracownicy">{{ p.nazwisko }}</td>
+                <td>{{ p.ID_etatu.nazwa }}</td>
+                <td>{{ p.ID_szefa.imie }} {{ p.ID_szefa.nazwisko }}</td>
+                <td>{{ p.zatrudniony }}</td>
+                <td>
+                    <input id="placa_pod{{ p.pk }}" class="placa_pod-edit form-control" type="number" name="placa_pod" value="{{ p.placa_pod }}">
+                    <span class="placa_pod-view">{{ p.placa_pod }}</span>
+                </td>
+                <td>
+                    <input id="placa_dod{{ p.pk }}" class="placa_dod-edit form-control" type="number" name="placa_dod" value="{{ p.placa_dod }}">
+                    <span class="placa_dod-view">{{ p.placa_dod }}</span>
+                </td>
+                <td>
+                    <span class="pracownik-zespol">{{ p.ID_zespolu.nazwa }}</span>
+                    <select class="form-control zespol-control" id="sel1">
+                        <option value="{{ p.ID_zespolu.nazwa }}-{{ p.ID_zespolu.pk }}">{{ p.ID_zespolu.nazwa }}</option>
+                        {% for z in zespoly %}
+                            {% if z.pk != p.ID_zespolu.pk %}
+                                <option value="{{ z.nazwa }}-{{ z.pk }}">{{ z.nazwa }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td>
+                <button type="button" class="ajax-edit btn btn-primary btn-xs edycja">edit</button>
+                <button type="button" class="ajax-save btn btn-primary btn-xs edycja">save</button>
+                <button type="button" class="ajax-cancel btn btn-primary btn-xs edycja">cancel</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+        </div>
+    {% endblock pracownicy %}
+
+    <div class="centered-pills">
+    <nav>
+        <ul class="pagination nav nav-pills">
+            {% if pracownicy.has_previous %}
+                <li>
+                <a href="?page={{ pracownicy.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                </a>
+                </li>
+            {% endif %}
+            {% load to_get_range %}
+            {% for strona in pracownicy.paginator.num_pages|get_range %}
+                {% with strona|add:"1" as ktora %}
+                {% if pracownicy.number == ktora %}
+                    <li class="active"><a href="?page={{ strona|add:"1" }}">{{ strona|add:"1" }}</a></li>
+                {% else %}
+                    <li><a href="?page={{ strona|add:"1" }}">{{ strona|add:"1" }}</a></li>
+                {% endif %}
+                {% endwith %}
+            {% endfor %}
+
+            {% if pracownicy.has_next %}
+                <li>
+                <a href="?page={{ pracownicy.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    </div>
+
+
+{% endblock content %}
